@@ -1,11 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:campus_buddy/Utils/textStylse.dart';
 import '../Utils/SizeConfig.dart';
 import '../components/appbar.dart';
 import '../components/card1.dart';
 import '../components/circularAvatar.dart';
-import 'package:campus_buddy/components/bottomnavbar.dart';
 
 class DashBoardPage extends StatelessWidget {
   const DashBoardPage({super.key});
@@ -19,6 +17,7 @@ class DashBoardPage extends StatelessWidget {
       appBar: MyAppBar(
         title: 'Hi Nagaraj',
         leading: MyCircularAvatar(
+          radius: 25,
           defaultImageUrl: 'assets/images/pp1.png',
         ),
         actions: [],
@@ -34,10 +33,11 @@ class DashBoardPage extends StatelessWidget {
               style: kheading(context),
             ),
             Card(
+              elevation: 4,
               child: SizedBox(
                 height: 200,
               ),
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.secondary,
             ),
             SizedBox(height: 20),
             Text(
@@ -50,22 +50,42 @@ class DashBoardPage extends StatelessWidget {
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
                 children: [
-                  card1('Clubs', 'assets/images/cardimages/clubs.png',
-                      width / 2, Color(0xffC3E2C2), context),
-                  card1('Bus Tracking', 'assets/images/cardimages/bus.png',
-                      width / 2, Color(0xffDBD2FF), context),
                   card1(
-                      'Opportunities',
-                      'assets/images/cardimages/Opportunities.png',
-                      width / 2,
-                      Color(0xffE2C2C8),
-                      context),
+                    'Clubs',
+                    'assets/images/cardimages/clubs.png',
+                    width / 2,
+                    Theme.of(context).brightness == Brightness.dark
+                        ? Color(0xff8cbfae)
+                        : Color(0xffC3E2C2),
+                    context,
+                  ),
                   card1(
-                      'Maintenance Reporting',
-                      'assets/images/cardimages/maintenance.png',
-                      width / 2,
-                      Color(0xffC2DAE2),
-                      context),
+                    'Bus Tracking',
+                    'assets/images/cardimages/bus.png',
+                    width / 2,
+                    Theme.of(context).brightness == Brightness.dark
+                        ? Color(0xff7881b9)
+                        : Color(0xffDBD2FF),
+                    context,
+                  ),
+                  card1(
+                    'Opportunities',
+                    'assets/images/cardimages/Opportunities.png',
+                    width / 2,
+                    Theme.of(context).brightness == Brightness.dark
+                        ? Color(0xffaa898f)
+                        : Color(0xffE2C2C8),
+                    context,
+                  ),
+                  card1(
+                    'Maintenance Reporting',
+                    'assets/images/cardimages/maintenance.png',
+                    width / 2,
+                    Theme.of(context).brightness == Brightness.dark
+                        ? Color(0xff8cbfae)
+                        : Color(0xffC2DAE2),
+                    context,
+                  ),
                 ],
               ),
             ),

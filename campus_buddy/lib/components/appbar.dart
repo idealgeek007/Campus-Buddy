@@ -19,14 +19,15 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      elevation: 0,
+      backgroundColor: Theme.of(context).colorScheme.background,
       title: Row(
         children: [
           if (leading != null) leading!,
           if (leading != null) SizedBox(width: 10),
           Text(
             title,
-            style: ksubHead(context),
+            style: ksubHead(context).copyWith(fontWeight: FontWeight.w600),
           ),
         ],
       ),
