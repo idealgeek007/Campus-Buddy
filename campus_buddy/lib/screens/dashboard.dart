@@ -10,7 +10,6 @@ class DashBoardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var height = SizeConfig.screenHeight;
     var width = SizeConfig.screenWidth;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,

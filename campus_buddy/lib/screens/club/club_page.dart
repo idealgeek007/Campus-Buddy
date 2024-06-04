@@ -1,10 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-
-import 'package:mongo_dart/mongo_dart.dart' as mongo;
 
 class Club {
   final String name;
@@ -35,32 +31,6 @@ class _ClubPageState extends State<ClubPage> {
   @override
   void initState() {
     super.initState();
-    fetchData();
-  }
-
-  Future<void> fetchData() async {
-    final mongo.Db db = mongo.Db(
-        'mongodb+srv://nagarajkj7:p15BbYxTRgqxYKvl@cluster0.x3ol6py.mongodb.net/Campus_Buddy');
-
-    final mongo.DbCollection collection = db.collection('clubs');
-
-    await db.open();
-
-    final List<Map<String, dynamic>> clubData =
-        await collection.find().toList();
-
-    setState(() {
-      clubs = clubData
-          .map((data) => Club(
-                name: data['name'],
-                details: data['details'],
-                leader: data['leader'],
-                contactDetails: data['contactDetails'],
-                socialMediaHandles: data['socialMediaHandles'],
-                photoUrl: data['photoUrl'],
-              ))
-          .toList();
-    });
   }
 
   @override

@@ -16,9 +16,14 @@ dependencies:
   cupertino_icons: ^1.0.6
   google_fonts: ^6.2.1
   icons_plus: ^5.0.0
-  mongo_dart: ^0.10.1
-  realm: ^2.2.1
-
+  firebase_core:
+  firebase_auth:
+  firebase_storage:
+  cloud_firestore:
+  google_sign_in:
+  provider:
+  flutter_barcode_scanner: ^2.0.0
+  firebase_database:
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -29,6 +34,7 @@ flutter:
     - assets/images/
     - assets/images/cardimages/
     - assets/images/c3Images/
+    - assets/images/gradients/
 
   uses-material-design: true
 

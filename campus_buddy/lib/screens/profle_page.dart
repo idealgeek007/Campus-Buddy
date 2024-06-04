@@ -1,9 +1,13 @@
-import 'package:campus_buddy/Utils/SizeConfig.dart';
-import 'package:campus_buddy/Utils/textStylse.dart';
-import 'package:campus_buddy/components/appbar.dart';
-import 'package:campus_buddy/components/circularAvatar.dart';
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:provider/provider.dart';
+import '../Utils/SizeConfig.dart';
+import '../Utils/textStylse.dart';
+import '../components/appbar.dart';
+import '../components/circularAvatar.dart';
+import '../screens/Login_Register/loginnew.dart';
+import '../authentication/authService.dart';
+import '../provider/user_provider.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -16,8 +20,16 @@ class _ProfilePageState extends State<ProfilePage> {
   bool _isSwitched = false;
 
   @override
+  void initState() {
+    super.initState();
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    userProvider.fetchUserData();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var width = SizeConfig.screenWidth;
+    final userProvider = Provider.of<UserProvider>(context);
 
     return Scaffold(
       appBar: MyAppBar(title: 'Profile', actions: []),
@@ -38,21 +50,27 @@ class _ProfilePageState extends State<ProfilePage> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          '2SD21CS055',
-                          style: ksubHead(context).copyWith(
-                              color: Colors.blue, fontWeight: FontWeight.w600),
-                        ),
-                        Text(
-                          'Nagaraj Jyoti',
-                          style: ksubHead(context)
-                              .copyWith(fontWeight: FontWeight.w600),
-                        ),
-                        Text(
-                          'CSE',
-                          style: ksubHead(context)
-                              .copyWith(fontWeight: FontWeight.w600),
-                        ),
+                        if (userProvider.user != null) ...[
+                          Text(
+                            userProvider
+                                .user!.name, // Assuming 'USN' is stored in 'id'
+                            style: ksubHead(context).copyWith(
+                                color: Colors.blue,
+                                fontWeight: FontWeight.w600),
+                          ),
+                          Text(
+                            userProvider.user!.email,
+                            style: ksubHead(context)
+                                .copyWith(fontWeight: FontWeight.w600),
+                          ),
+                          Text(
+                            'SEM', // Replace with actual semester data if available
+                            style: ksubHead(context)
+                                .copyWith(fontWeight: FontWeight.w600),
+                          ),
+                        ] else ...[
+                          CircularProgressIndicator(),
+                        ]
                       ],
                     )
                   ],
@@ -69,27 +87,41 @@ class _ProfilePageState extends State<ProfilePage> {
                     });
                   },
                 ),
+                onTap: () {},
               ),
               listTiles(
                 title: 'Invite Friends',
                 leadingIcon: Bootstrap.share,
+                onTap: () {},
               ),
               listTiles(
                 title: 'Feedback',
                 leadingIcon: Bootstrap.chat_square_quote,
+                onTap: () {},
               ),
               listTiles(
                 title: 'About Us',
                 leadingIcon: Bootstrap.info_circle,
+                onTap: () {},
               ),
               listTiles(
                 title: 'Logout',
                 leadingIcon: Bootstrap.box_arrow_right,
+                onTap: () => logout(),
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  void logout() {
+    final _auth = AuthService();
+    _auth.signOut();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => LoginPage()),
     );
   }
 }
@@ -98,11 +130,13 @@ class listTiles extends StatelessWidget {
   final String title;
   final IconData leadingIcon;
   final Switch? switchbutton;
+  final VoidCallback onTap;
   const listTiles({
     super.key,
     required this.title,
     required this.leadingIcon,
     this.switchbutton,
+    required this.onTap,
   });
 
   @override
@@ -124,6 +158,7 @@ class listTiles extends StatelessWidget {
             leadingIcon,
           ),
           trailing: switchbutton,
+          onTap: onTap,
         ),
       ),
     );
