@@ -1,0 +1,44 @@
+name: campus_buddy
+description: "An app that makes college life easy"
+
+
+publish_to: 'none' 
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.1 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.6
+  google_fonts: ^6.2.1
+  icons_plus: ^5.0.0
+  firebase_core:
+  firebase_auth:
+  firebase_storage:
+  cloud_firestore:
+  google_sign_in:
+  provider:
+  flutter_barcode_scanner: ^2.0.0
+  firebase_database:
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+flutter:
+  assets:
+    - assets/images/
+    - assets/images/cardimages/
+    - assets/images/c3Images/
+    - assets/images/gradients/
+
+  uses-material-design: true
+
+  
+
+  
+  
