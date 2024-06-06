@@ -17,13 +17,18 @@ dependencies:
   google_fonts: ^6.2.1
   icons_plus: ^5.0.0
   firebase_core:
+  photo_view:
+  intl:
   firebase_auth:
   firebase_storage:
   cloud_firestore:
   google_sign_in:
   provider:
+  flutter_inappwebview:
   flutter_barcode_scanner: ^2.0.0
   firebase_database:
+  image_picker: ^1.1.2
+  url_launcher:
 dev_dependencies:
   flutter_test:
     sdk: flutter

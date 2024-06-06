@@ -61,6 +61,12 @@ class MarksOverview extends StatelessWidget {
                       style: GoogleFonts.poppins(
                           fontSize: width * 0.04, fontWeight: FontWeight.w600),
                     )),
+                    DataColumn(
+                        label: Text(
+                      'Delete',
+                      style: GoogleFonts.poppins(
+                          fontSize: width * 0.04, fontWeight: FontWeight.w600),
+                    )),
                   ],
                   rows: provider.subjects.map((subject) {
                     return DataRow(
@@ -107,6 +113,10 @@ class MarksOverview extends StatelessWidget {
                                 border: OutlineInputBorder()),
                           ),
                         ),
+                        DataCell(IconButton(
+                          onPressed: () => provider.deleteSubject(subject.id),
+                          icon: Icon(Icons.delete),
+                        )),
                       ],
                     );
                   }).toList(),
@@ -114,6 +124,12 @@ class MarksOverview extends StatelessWidget {
               ),
               SizedBox(height: 20), // Add some spacing between table and button
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                      Theme.of(context).brightness == Brightness.dark
+                          ? Color(0xff8cbfae)
+                          : Color(0xffC3E2C2),
+                ),
                 onPressed: () {
                   provider.subjects.forEach((subject) {
                     subject.ia1 = int.tryParse(
@@ -157,32 +173,62 @@ class MarksOverview extends StatelessWidget {
             children: [
               TextField(
                 controller: subjectController,
-                decoration: const InputDecoration(labelText: 'Subject Name'),
+                decoration: InputDecoration(
+                  labelText: 'Subject Name',
+                  labelStyle: GoogleFonts.poppins(
+                      fontSize: SizeConfig.screenWidth * 0.04,
+                      fontWeight: FontWeight.w500),
+                ),
               ),
               TextField(
                 controller: ia1Controller,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(labelText: 'IA1 Marks'),
+                decoration: InputDecoration(
+                  labelText: 'IA1 Marks',
+                  labelStyle: GoogleFonts.poppins(
+                      fontSize: SizeConfig.screenWidth * 0.04,
+                      fontWeight: FontWeight.w400),
+                ),
               ),
               TextField(
                 controller: ia2Controller,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(labelText: 'IA2 Marks'),
+                decoration: InputDecoration(
+                  labelText: 'IA2 Marks',
+                  labelStyle: GoogleFonts.poppins(
+                      fontSize: SizeConfig.screenWidth * 0.04,
+                      fontWeight: FontWeight.w400),
+                ),
               ),
               TextField(
                 controller: ia3Controller,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(labelText: 'IA3 Marks'),
+                decoration: InputDecoration(
+                  labelText: 'IA3 Marks',
+                  labelStyle: GoogleFonts.poppins(
+                      fontSize: SizeConfig.screenWidth * 0.04,
+                      fontWeight: FontWeight.w400),
+                ),
               ),
             ],
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('Cancel'),
+              child: Text(
+                'Cancel',
+                style: GoogleFonts.poppins(
+                    fontSize: SizeConfig.screenWidth * 0.04,
+                    fontWeight: FontWeight.w600),
+              ),
               onPressed: () => Navigator.of(context).pop(),
             ),
             TextButton(
-              child: const Text('Add'),
+              child: Text(
+                'Add',
+                style: GoogleFonts.poppins(
+                    fontSize: SizeConfig.screenWidth * 0.04,
+                    fontWeight: FontWeight.w600),
+              ),
               onPressed: () {
                 final subject = Subject(
                   id: '',

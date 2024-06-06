@@ -1,4 +1,6 @@
 import 'package:campus_buddy/screens/Admin/manageCR.dart';
+import 'package:campus_buddy/screens/sendNotice.dart';
+import 'package:campus_buddy/screens/viewReports.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -43,7 +45,7 @@ class _ProfilePageState extends State<ProfilePage> {
               .update({
             'name': userProvider.user!.name,
             'sem': userProvider.user!.sem,
-            'div': userProvider.user!.div,
+            'division': userProvider.user!.div,
             'branch': userProvider.user!.branch,
           });
           // Optionally, show a success message
@@ -195,7 +197,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               listTiles(
                 title: 'Edit Profile',
-                leadingIcon: Bootstrap.palette,
+                leadingIcon: Bootstrap.person_vcard,
                 onTap: () => editProfile(context),
               ),
               listTiles(
@@ -221,21 +223,26 @@ class _ProfilePageState extends State<ProfilePage> {
                   onTap: () => Navigator.push(context,
                       MaterialPageRoute(builder: (context) => ManageCRPage())),
                 ),
-              listTiles(
-                title: 'Invite Friends',
-                leadingIcon: Bootstrap.share,
-                onTap: () {},
-              ),
-              listTiles(
-                title: 'Feedback',
-                leadingIcon: Bootstrap.chat_square_quote,
-                onTap: () {},
-              ),
-              listTiles(
-                title: 'About Us',
-                leadingIcon: Bootstrap.info_circle,
-                onTap: () {},
-              ),
+              if (userProvider.user != null && userProvider.user!.isAdmin)
+                listTiles(
+                  title: 'Send Notice',
+                  leadingIcon: Bootstrap.chat_square_quote,
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PostNoticePage(),
+                      )),
+                ),
+              if (userProvider.user != null && userProvider.user!.isAdmin)
+                listTiles(
+                  title: 'Maintenance Reports',
+                  leadingIcon: Bootstrap.flag,
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ViewReportsPage(),
+                      )),
+                ),
               listTiles(
                 title: 'Logout',
                 leadingIcon: Bootstrap.box_arrow_right,

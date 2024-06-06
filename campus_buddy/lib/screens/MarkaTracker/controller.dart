@@ -61,4 +61,22 @@ class SubjectProvider with ChangeNotifier {
         .add(subject.toFirestore());
     notifyListeners();
   }
+
+  void deleteSubject(String subjectId) async {
+    try {
+      await _firestore
+          .collection('users')
+          .doc(_auth.currentUser?.email)
+          .collection('IA_marks')
+          .doc(subjectId)
+          .delete();
+
+      _subjects.removeWhere((subject) => subject.id == subjectId);
+      notifyListeners();
+
+      print('Subject deleted successfully');
+    } catch (e) {
+      print('Failed to delete subject: $e');
+    }
+  }
 }

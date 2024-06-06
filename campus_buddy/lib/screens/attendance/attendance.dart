@@ -104,8 +104,8 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 5,
+                                    spreadRadius: 3,
+                                    blurRadius: 3,
                                     offset: Offset(0, 3),
                                   ),
                                 ],
@@ -125,8 +125,8 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 5,
+                                    spreadRadius: 3,
+                                    blurRadius: 3,
                                     offset: Offset(0, 3),
                                   ),
                                 ],
@@ -150,6 +150,14 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
                             onPressed: () =>
                                 _showEditSubjectDialog(context, doc),
                           ),
+                          IconButton(
+                            color: Colors.blue,
+                            icon: const Icon(
+                              Icons.delete,
+                              size: 35,
+                            ),
+                            onPressed: () => _deleteSubject(doc.id),
+                          ),
                         ],
                       ),
                     ),
@@ -163,6 +171,17 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
         },
       ),
     );
+  }
+
+  void _deleteSubject(String docId) {
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser?.email)
+        .collection('subjects')
+        .doc(docId)
+        .delete()
+        .then((_) => print('Subject deleted successfully'))
+        .catchError((error) => print('Failed to delete subject: $error'));
   }
 
   void _incrementAttendance(String docId, int attended, int total) {

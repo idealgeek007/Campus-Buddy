@@ -5,9 +5,19 @@ import 'package:flutter/material.dart';
 
 import '../Utils/SizeConfig.dart';
 import 'MarkaTracker/view.dart';
+import 'Resources/resourcesWebview.dart';
+import 'TimeTable/timetable.dart';
 
 class AcademicsPage extends StatelessWidget {
   const AcademicsPage({super.key});
+  void _openWebView(BuildContext context, String url) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => WebViewPage(url: url),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +41,8 @@ class AcademicsPage extends StatelessWidget {
                     right: -170,
                     imageUrl: 'assets/images/c3Images/timetable.png',
                     title: 'TimeTable',
-                    onTap: () {},
+                    onTap: () => Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => TimeTables())),
                   ),
                   AcaCardStack(
                     top: -10,
@@ -40,7 +51,10 @@ class AcademicsPage extends StatelessWidget {
                     bottom: -20,
                     imageUrl: 'assets/images/c3Images/resources.png',
                     title: 'Resources',
-                    onTap: () {},
+                    onTap: () {
+                      _openWebView(context,
+                          'https://sdmcselibrary.blogspot.com/p/home.html');
+                    },
                   ),
                   AcaCardStack(
                     top: -10,
