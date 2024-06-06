@@ -1,3 +1,5 @@
+import 'package:campus_buddy/screens/Admin/manageCR.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +10,7 @@ import '../components/circularAvatar.dart';
 import '../screens/Login_Register/loginnew.dart';
 import '../authentication/authService.dart';
 import '../provider/user_provider.dart';
+import '../theme/theme.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -30,6 +33,115 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     var width = SizeConfig.screenWidth;
     final userProvider = Provider.of<UserProvider>(context);
+    void saveChanges() async {
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      if (userProvider.user != null) {
+        try {
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(userProvider.user!.id) // Assuming 'id' is the document ID
+              .update({
+            'name': userProvider.user!.name,
+            'sem': userProvider.user!.sem,
+            'div': userProvider.user!.div,
+            'branch': userProvider.user!.branch,
+          });
+          // Optionally, show a success message
+        } catch (e) {
+          print('Error saving changes: $e');
+          // Handle error appropriately
+        }
+      }
+    }
+
+    void editProfile(BuildContext context) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Edit Profile'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(
+                  initialValue: userProvider.user!.name,
+                  decoration: InputDecoration(labelText: 'Name'),
+                  onChanged: (value) {
+                    setState(() {
+                      userProvider.user!.name = value;
+                    });
+                  },
+                ),
+                DropdownButtonFormField<String>(
+                  value: userProvider.user!.branch,
+                  decoration: InputDecoration(labelText: 'Branch'),
+                  onChanged: (value) {
+                    setState(() {
+                      userProvider.user!.branch = value!;
+                    });
+                  },
+                  items: [
+                    'AI & ML',
+                    'Civil',
+                    'Chemical',
+                    'Computer Science',
+                    'Electrical',
+                    'Electronics & Communication',
+                    'Mechanical',
+                  ].map<DropdownMenuItem<String>>((String branch) {
+                    return DropdownMenuItem<String>(
+                      value: branch,
+                      child: Text(branch),
+                    );
+                  }).toList(),
+                ),
+                DropdownButtonFormField<String>(
+                  value: userProvider.user!.div,
+                  decoration: InputDecoration(labelText: 'Division'),
+                  onChanged: (value) {
+                    setState(() {
+                      userProvider.user!.div = value!;
+                    });
+                  },
+                  items: ['A', 'B']
+                      .map<DropdownMenuItem<String>>((String division) {
+                    return DropdownMenuItem<String>(
+                      value: division,
+                      child: Text(division),
+                    );
+                  }).toList(),
+                ),
+                DropdownButtonFormField<String>(
+                  value: userProvider.user!.sem.toString(),
+                  decoration: InputDecoration(labelText: 'Semester'),
+                  onChanged: (value) {
+                    setState(() {
+                      userProvider.user!.sem = int.parse(value!);
+                    });
+                  },
+                  items: List.generate(
+                    8,
+                    (index) => DropdownMenuItem<String>(
+                      value: (index + 1).toString(),
+                      child: Text('Semester ${index + 1}'),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  saveChanges();
+                  Navigator.of(context).pop();
+                },
+                child: Text('Save'),
+              ),
+            ],
+          );
+        },
+      );
+    }
 
     return Scaffold(
       appBar: MyAppBar(title: 'Profile', actions: []),
@@ -37,44 +149,54 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Container(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
                 padding: const EdgeInsets.all(15.0),
-                child: Row(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    MyCircularAvatar(
-                      radius: SizeConfig.screenWidth * 0.2,
-                      defaultImageUrl: 'assets/images/pp1.png',
-                    ),
-                    SizedBox(width: 20),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (userProvider.user != null) ...[
+                    if (userProvider.user != null) ...[
+                      Text(
+                        "Name: " + userProvider.user!.name,
+                        style: ksubHead(context).copyWith(
+                            color: Colors.blue, fontWeight: FontWeight.w600),
+                      ),
+                      Text(
+                        userProvider.user!.email,
+                        style: ksubHead(context)
+                            .copyWith(fontWeight: FontWeight.w600),
+                      ),
+                      Text(
+                        userProvider.user!.branch,
+                        style: ksubHead(context)
+                            .copyWith(fontWeight: FontWeight.w600),
+                      ),
+                      Row(
+                        children: [
                           Text(
-                            userProvider
-                                .user!.name, // Assuming 'USN' is stored in 'id'
-                            style: ksubHead(context).copyWith(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.w600),
-                          ),
-                          Text(
-                            userProvider.user!.email,
+                            userProvider.user!.sem.toString(),
                             style: ksubHead(context)
                                 .copyWith(fontWeight: FontWeight.w600),
                           ),
                           Text(
-                            'SEM', // Replace with actual semester data if available
+                            userProvider.user!.div,
                             style: ksubHead(context)
                                 .copyWith(fontWeight: FontWeight.w600),
                           ),
-                        ] else ...[
-                          CircularProgressIndicator(),
-                        ]
-                      ],
-                    )
+                        ],
+                      )
+                    ] else ...[
+                      CircularProgressIndicator(),
+                    ]
                   ],
                 ),
+              ),
+              listTiles(
+                title: 'Edit Profile',
+                leadingIcon: Bootstrap.palette,
+                onTap: () => editProfile(context),
               ),
               listTiles(
                 title: 'Change App Theme',
@@ -84,11 +206,21 @@ class _ProfilePageState extends State<ProfilePage> {
                   onChanged: (value) {
                     setState(() {
                       _isSwitched = value;
+                      // Toggle theme when switch is changed
+                      Provider.of<ThemeProvider>(context, listen: false)
+                          .toggleTheme();
                     });
                   },
                 ),
                 onTap: () {},
               ),
+              if (userProvider.user != null && userProvider.user!.isAdmin)
+                listTiles(
+                  title: 'Manage CRs',
+                  leadingIcon: Bootstrap.info_circle,
+                  onTap: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ManageCRPage())),
+                ),
               listTiles(
                 title: 'Invite Friends',
                 leadingIcon: Bootstrap.share,

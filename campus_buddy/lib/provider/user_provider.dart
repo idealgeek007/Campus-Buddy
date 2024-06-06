@@ -10,7 +10,7 @@ class UserProvider with ChangeNotifier {
   Future<void> fetchUserData() async {
     try {
       User? currentUser = FirebaseAuth.instance.currentUser;
-      if (currentUser != null) {
+      if (currentUser != null && currentUser.email != null) {
         String userEmail = currentUser.email!;
         QuerySnapshot querySnapshot = await FirebaseFirestore.instance
             .collection('users')
@@ -20,7 +20,11 @@ class UserProvider with ChangeNotifier {
         if (querySnapshot.docs.isNotEmpty) {
           _user = Users.fromFirestore(querySnapshot.docs.first);
           notifyListeners();
+        } else {
+          print('No user found with the email: $userEmail');
         }
+      } else {
+        print('No current user or email is null');
       }
     } catch (e) {
       print('Error fetching user data: $e');

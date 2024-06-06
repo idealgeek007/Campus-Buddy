@@ -1,5 +1,6 @@
 import 'package:campus_buddy/authentication/authgate.dart';
 import 'package:campus_buddy/provider/user_provider.dart';
+import 'package:campus_buddy/screens/MarkaTracker/controller.dart';
 import 'package:campus_buddy/theme/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -21,14 +22,19 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (context) => SubjectProvider()),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Campus Buddy',
-        theme: lightTheme, // Correctly define or use your theme variable
-        darkTheme: darkTheme,
-        themeMode: ThemeMode.system,
-        home: AuthGate(),
+      child: Consumer<ThemeProvider>(
+        builder: (context, themeProvider, _) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Campus Buddy',
+            theme: themeProvider.getCustomTheme(),
+            themeMode: ThemeMode.system,
+            home: AuthGate(),
+          );
+        },
       ),
     );
   }

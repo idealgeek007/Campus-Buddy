@@ -11,7 +11,7 @@ TextStyle kheading(BuildContext context) => GoogleFonts.poppins(
     );
 
 TextStyle ksubHead(BuildContext context) => GoogleFonts.poppins(
-      fontSize: SizeConfig.screenWidth / 15,
+      fontSize: SizeConfig.screenWidth / 20,
       fontWeight: FontWeight.w400,
       color: Theme.of(context).colorScheme.onSurface,
     );

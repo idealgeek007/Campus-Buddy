@@ -1,16 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Users {
-  final String name;
+  String name;
   final String id;
-  final String email;
-  final bool isCR;
-  final String usn;
-  final bool isAdmin;
+  String email;
+  bool isCR;
+  String branch;
+  bool isAdmin;
+  String div;
+  int sem;
 
   Users({
+    required this.div,
+    required this.sem,
     required this.isCR,
-    required this.usn,
+    required this.branch,
     required this.name,
     required this.id,
     required this.email,
@@ -21,12 +25,14 @@ class Users {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
 
     return Users(
-      usn: data['usn'],
+      branch: data['branch'],
       name: data['name'],
       id: doc.id,
       email: data['email'],
       isCR: data['isCR'],
       isAdmin: data['isAdmin'],
+      div: data['division'],
+      sem: data['sem'],
     );
   }
 }

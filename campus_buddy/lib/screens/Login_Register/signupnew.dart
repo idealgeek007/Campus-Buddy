@@ -1,9 +1,7 @@
 import 'package:campus_buddy/screens/Login_Register/email_veri.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -420,8 +418,8 @@ class _SignUpPageState extends State<SignUpPage> {
             _passwordController.text.trim(),
             _nameController.text.trim(),
             int.parse(_selectedSem!),
-            _selectedDiv! // Division
-            );
+            _selectedDiv!,
+            _selectedBrnach!);
 
         // Navigate to the HomePage on successful signup
         Navigator.push(

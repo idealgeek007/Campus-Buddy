@@ -35,3 +35,20 @@ ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
   ),
 );
+
+class ThemeProvider extends ChangeNotifier {
+  ThemeData _currentTheme = lightTheme; // Set default theme to light
+
+  // Step 2: Methods to update the custom theme
+  void setCustomTheme(ThemeData theme) {
+    _currentTheme = theme;
+    notifyListeners();
+  }
+
+  void toggleTheme() {
+    _currentTheme = _currentTheme == lightTheme ? darkTheme : lightTheme;
+    notifyListeners();
+  }
+
+  ThemeData getCustomTheme() => _currentTheme;
+}

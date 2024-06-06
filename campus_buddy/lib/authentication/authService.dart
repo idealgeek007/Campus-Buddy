@@ -34,7 +34,7 @@ class AuthService {
 
   // Sign UP
   Future<UserCredential> signUpWithEmailPassword(String email, String password,
-      String name, int sem, String division) async {
+      String name, int sem, String division, String branch) async {
     try {
       // Create user with email and password
       UserCredential userCredential = await FirebaseAuth.instance
@@ -45,10 +45,11 @@ class AuthService {
       await FirebaseFirestore.instance.collection('users').doc(email).set({
         'name': name,
         'email': email,
-        'SEM': sem,
+        'sem': sem,
         'division': division,
         'isAdmin': false,
         'isCR': false,
+        'branch': branch,
       });
 
       return userCredential;
