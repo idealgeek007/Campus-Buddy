@@ -1,4 +1,6 @@
 # CampusBuddy-v2
+![IMG-20240608-WA0006](https://github.com/idealgeek007/Campus-Buddy/assets/90248052/27fc8981-c2a1-4cc9-bda8-78740c60fb0e)
+![IMG-20240608-WA0004](https://github.com/idealgeek007/Campus-Buddy/assets/90248052/8fa0691b-553b-41ec-8fdd-4fefa277e84c)
 
 ![IMG-20240608-WA0018](https://github.com/idealgeek007/Campus-Buddy/assets/90248052/d8134419-b47a-4b14-9573-2ab409716f08)
 ![IMG-20240608-WA0017](https://github.com/idealgeek007/Campus-Buddy/assets/90248052/d4850474-968c-48db-be51-df9571f72c39)
@@ -12,7 +14,5 @@
 ![IMG-20240608-WA0009](https://github.com/idealgeek007/Campus-Buddy/assets/90248052/fbdfd37a-0779-44b3-aee1-cc1340fa1978)
 ![IMG-20240608-WA0008](https://github.com/idealgeek007/Campus-Buddy/assets/90248052/d7158699-9b5f-44f9-80f8-b081b6076fe4)
 ![IMG-20240608-WA0007](https://github.com/idealgeek007/Campus-Buddy/assets/90248052/35c5e553-e62a-4ce2-accf-71901e62bd7f)
-![IMG-20240608-WA0006](https://github.com/idealgeek007/Campus-Buddy/assets/90248052/27fc8981-c2a1-4cc9-bda8-78740c60fb0e)
 ![IMG-20240608-WA0005](https://github.com/idealgeek007/Campus-Buddy/assets/90248052/44aac6b7-03c9-40c8-af56-2c8a3d041562)
-![IMG-20240608-WA0004](https://github.com/idealgeek007/Campus-Buddy/assets/90248052/8fa0691b-553b-41ec-8fdd-4fefa277e84c)
 ![IMG-20240608-WA0002](https://github.com/idealgeek007/Campus-Buddy/assets/90248052/138a7438-3871-4890-82e7-0ff4de0f87de)
